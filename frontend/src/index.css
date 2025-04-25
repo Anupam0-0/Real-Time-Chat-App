@@ -1,8 +1,21 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-    themes: all
-};
+  themes: all;
+}
+
 
 html{
     overflow: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    display: none;
+    border-radius: 10px;
+
 }

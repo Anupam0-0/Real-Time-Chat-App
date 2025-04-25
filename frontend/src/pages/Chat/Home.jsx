@@ -1,6 +1,7 @@
 import React from 'react'
 import useThemeStore from "../../store/useThemeStore";
 import ChatNavbar from './ChatNavbar';
+import Sidebar from './Sidebar';
 
 const Home = () => {
 
@@ -9,22 +10,19 @@ const Home = () => {
     return (
 
         <div data-theme={theme} className='h-screen overflow-hidden bg-base-300'>
-            <ChatNavbar />
-            <div className='grid grid-cols-1 md:grid-cols-15 '>
+            <div className='grid grid-cols-1 md:grid-cols-20 '>
+                <div className='hidden md:block md:col-span-1'>
+                    <ChatNavbar />
+                </div>
                 {/* Sidebar */}
-                <div className='hidden md:block md:col-span-3 border-r border-gray-300 overflow-y-auto h-screen'>
-                    {
-                        Array.from({ length: 100 }, (_, i) => (
-                            <div key={i} className='p-4 border-b border-gray-200 hover:bg-gray-100 cursor-pointer'>
-                                <p className='p-4' >Number {i}</p>
-                            </div>
-                        ))
-                    }
+                <div className='hidden md:block md:col-span-5'>
+                    <Sidebar />
                 </div>
 
 
+
                 {/* Main */}
-                <div>
+                <div className='col-span-1 md:col-span-14 overflow-y-auto h-screen bg-base-100'>
 
                 </div>
             </div>
