@@ -4,11 +4,11 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import path from "path";
 
-import {connectDB} from "./lib/db";
+import {connectDB} from "./lib/db.js";
 import {app, server} from "./lib/socket.js";
 
-// import authRouter from "./routes/auth.route.js";
-// import messageRoutes from "./routes/user.route.js";
+import authRoutes from "./routes/auth.route.js";
+import messageRoutes from "./routes/message.route.js";
 
 dotenv.config();
 
@@ -20,10 +20,15 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
 
+app.use("/", (req, res) => {
+  console.log("Hello");
+  return res.json({message: "Hello There"})
+})
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
@@ -36,7 +41,7 @@ if (process.env.NODE_ENV === "production"){
     })
 }
 
-Server.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     connectDB();
 })

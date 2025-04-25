@@ -1,7 +1,7 @@
-import { generateToken } from "../lib/utils";
-import User from "../models/user.model";
+import { generateToken } from "../lib/utils.js";
+// import User from "../models/user.model";
 import bcrypt from "bcryptjs";
-import cloudinary from "../lib/cloudinary";
+// import cloudinary from "../lib/cloudinary";
 
 export const signup = async (req, res) => {
   const { username, fullName, password } = req.body;
@@ -48,9 +48,9 @@ export const signup = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ username });
 
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
@@ -66,7 +66,7 @@ export const login = async (req, res) => {
     res.status(200).json({
       _id: user._id,
       fullName: user.fullName,
-      email: user.email,
+      username: user.username,
       profilePic: user.profilePic,
     });
   } catch (error) {
@@ -75,7 +75,7 @@ export const login = async (req, res) => {
   }
 };
 
-export const logourt = async (req, res) => {
+export const logout = async (req, res) => {
     try {
         res.cookie("jwt", "", {maxAge: 0});
         req.status(200).json({message: "Logged out Successfully"})
