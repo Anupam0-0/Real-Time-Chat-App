@@ -25,7 +25,7 @@ app.use(
   })
 );
 
-app.use("/", (req, res) => {
+app.get("/", (req, res) => {
   console.log("Hello");
   return res.json({message: "Hello There"})
 })
