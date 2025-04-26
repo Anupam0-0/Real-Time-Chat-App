@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router';
 
 const AuthPage = () => {
   const navigate = useNavigate();
-  // const user = useAuthStore((state) => state.user);
-  // if(user){
-  //   navigate('/chat');
-  // }
+  const user = useAuthStore((state) => state.user);
+  if(user){
+    navigate('/chat');
+  }
 
   return (
     <div className="h-screen overflow-y-auto bg-[#F5FAF6] w-full relative md:overflow-hidden">

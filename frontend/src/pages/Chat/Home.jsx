@@ -16,7 +16,6 @@ const Home = () => {
 
 
     return (
-
         <div data-theme={theme} className='h-screen overflow-hidden bg-base-300'>
             <div className='grid grid-cols-1 md:grid-cols-20 '>
                 <div className='hidden md:block md:col-span-1'>
@@ -26,8 +25,6 @@ const Home = () => {
                 <div className='hidden md:block md:col-span-5'>
                     <Sidebar />
                 </div>
-
-
 
                 {/* Main */}
                 <div className='col-span-1 md:col-span-14 overflow-y-auto h-screen bg-base-100'>

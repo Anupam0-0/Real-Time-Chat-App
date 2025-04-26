@@ -8,6 +8,8 @@ import {connectDB} from "./lib/db.js";
 import {app, server} from "./lib/socket.js";
 
 import authRoutes from "./routes/auth.route.js";
+import userRoutes from "./routes/user.route.js";
+import friendRoutes from "./routes/friend.route.js";
 import messageRoutes from "./routes/message.route.js";
 
 dotenv.config();
@@ -30,6 +32,8 @@ app.get("/", (req, res) => {
   return res.json({message: "Hello There"})
 })
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/friends", friendRoutes);
 app.use("/api/messages", messageRoutes);
 
 // for production build

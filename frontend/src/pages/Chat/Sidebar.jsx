@@ -1,12 +1,14 @@
 import React from 'react'
+import SearchUserModal from './SearchUserModal'
 import { MessageSquarePlus, EllipsisVertical } from 'lucide-react'
 
 
 const Sidebar = () => {
     return (
         <div>
-            <div className='border-x bg-base-200 border-slate-50/20 text-slate-50/80 overflow-y-auto h-screen'>
+            <div className='border-x bg-base-200 hide-scrollbar border-slate-50/20 text-slate-50/80 overflow-y-auto h-screen'>
                 <Header />
+                <SearchUserModal />
                 {/* chats */}
                 <div className=''>
                     {
@@ -27,12 +29,13 @@ export default Sidebar
 
 function Header() {
     return (
-        <div className='flex flex-col gap-6 border-b border-slate-50/10 pt-5 pb-1 sticky top-0 bg-base-300'>
+        <div className='flex flex-col gap-6 border-b border-slate-50/10 pt-2 pb-1 sticky top-0 bg-base-300'>
             <div className='flex items-center justify-between pl-4 pr-2 '>
                 <h1 className='text-bold text-2xl text-white/90' >Chat</h1>
                 <div className='flex items-center gap-4'>
-                    <button className='mt-1'><MessageSquarePlus size={28} strokeWidth={1.5} /></button>
+                    <button className="btn mt-2" onClick={() => document.getElementById('my_modal_2').showModal()}><MessageSquarePlus size={28} strokeWidth={1.5} /></button>
                     <button><EllipsisVertical /></button>
+
                 </div>
             </div>
 
@@ -44,3 +47,4 @@ function Header() {
 
     )
 }
+

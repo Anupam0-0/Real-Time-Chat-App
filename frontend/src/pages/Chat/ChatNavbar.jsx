@@ -2,31 +2,40 @@ import { Settings, MessageSquareMore, Users, QrCode, LogOut } from 'lucide-react
 import React from 'react'
 import useAuthStore from '../../store/useAuthStore'
 import { useNavigate } from 'react-router'
+import { toast } from 'react-hot-toast'
+
+
 
 const ChatNavbar = () => {
     const navigate = useNavigate();
+    const user = useAuthStore((state) => state.user);
+
     const getUser = () => {
-        const user = useAuthStore.getState().user;
-        alert(user);
+        toast('Changing profile picture is under development...', {icon: '😐'})
     }
 
-    const handleLogout = () => {
-        const logout = useAuthStore.getState().logout;
-        logout();
-        toast.success('Logged out successfully!');
-        navigate('/login');
+    const handleLogout = async () => {
+        try {
+            const logout = useAuthStore.getState().logout;
+            await logout();
+            toast.success('Logged out successfully!');
+            navigate('/login');
+        } catch (error) {
+            console.error('Logout error:', error);
+            toast.error('Failed to logout. Please try again.');
+        }
     }
 
     return (
         <div className='bg-base-200 p-6 h-screen'>
             <div className='h-full flex flex-col items-center justify-between'>
                 <div className='flex flex-col gap-4'>
-                    <button onClick={getUser} className="avatar p-2">
+                    <button onClick={getUser} className="avatar p-2 cursor-pointer">
                         <div className="w-8 rounded-full">
                             <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
                         </div>
                     </button>
-                        
+
                     <div className='hover:bg-base-100 rounded-full p-2 flex items-center justify-center cursor-pointer transition-all ease-in-out duration-300'>
                         <MessageSquareMore size={30} strokeWidth={1.9} />
                     </div>

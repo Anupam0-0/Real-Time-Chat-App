@@ -19,6 +19,10 @@ const messageSchema = new mongoose.Schema(
     image: {
       type: String,
     },
+    timestamp: {
+       type: Date, 
+       default: Date.now 
+    },
   },
   { timestamps: true } // Automatically add createdAt and updatedAt timestamps
 );
