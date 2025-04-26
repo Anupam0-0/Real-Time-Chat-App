@@ -48,6 +48,7 @@ const SignupForm = () => {
   };
 
   const handleSubmit = async (e) => {
+    try{
     e.preventDefault();
     if (validateForm()) {
       console.log('Signup form submitted', { name, username, password, agreeTerms }); // Changed from email to username
@@ -59,17 +60,19 @@ const SignupForm = () => {
 
       const data = await res.data;
       console.log(data);
+
       if (data) {
         toast.success('Account created successfully!', data);
         localStorage.setItem('userId', data.userId); // Store the token in local storage
-
-
+        navigate('/chat');
       } else {
         toast.error(data.message || 'Something went wrong!');
       }
     }
-
-    navigate('/chat');
+  } catch (error) {
+    console.error("Error in handleSubmit:", error);
+    toast.error('Failed to create account. Please try again.');
+  }
   };
 
   return (

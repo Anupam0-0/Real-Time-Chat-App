@@ -1,4 +1,6 @@
 import axios from 'axios';
+import useAuthStore from '../store/useAuthStore'; 
+
 
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:3000/api',
@@ -16,15 +18,17 @@ export const searchUsers = async (query) => {
     }
 }
 
-export const handleAddFriend = async (id) => {
+export const AddFriend = async (friendId) => {
+    const user = useAuthStore.getState().user; // Get the user ID from the store
     try {
-        const res = await axiosInstance.post('/friends/add', { id });
-        if ()
-        
+        const res = await axiosInstance.post('/friends/add', { friendId: friendId, userId: user });
+        if (res.status === 200) {
+            const ans = 'added';
+            return ans; // Return the status of the response
+        }// Return the status of the response
     } catch (error) {
-        console.error("Error in handleAddFriend:", error);
-        throw error; // Rethrow the error to be handled by the calling function
-        
+        console.error("Error in handleAddFriend:", error.message);
+        throw error; // Rethrow the error to be handled by the calling function 
     }
 }
 
