@@ -1,5 +1,6 @@
 
 import { User, MessageCircleMore, Phone, Send, Mic, CheckCheck, CornerRightUp, MessageSquare } from 'lucide-react'
+import Navbar from './Navbar'
 
 const Home = () => {
   return (
@@ -15,23 +16,7 @@ export default Home
 
 
 
-function Navbar() {
-  return (
-    <nav className='px-4 md:px-16 flex items-center justify-between h-22 relative z-10 '>
-      <h1 className='text-2xl font-medium tracking-wide'>mono<span className='text-green-400/90'>chat</span></h1>
-      <div className='gap-6 hidden sm:flex text-lg text-slate-50/90 relative left-10'>
-        <a href='#' className='px-4'>product</a>
-        <a href='#' className='px-4'>pricing</a>
-        <a href='#' className='px-4'>contacts</a>
-      </div>
 
-      <div className='gap-3 flex '>
-        <a href='/signup' className='py-1.5 px-5 rounded-4xl border-[2.2px] border-neutral-50/80 text-neutral-50 uppercase font-medium cursor-pointer'> Signup</a>
-        <a href='/login' className='py-1.5 px-5 rounded-4xl border-[2.2px] border-neutral-50/80 bg-neutral-50 text-neutral-950 uppercase font-medium cursor-pointer'> Login</a>
-      </div>
-    </nav>
-  )
-}
 
 function Main() {
   return (

@@ -3,12 +3,13 @@
   themes: all;
 }
 
-
-html{
+html, body {
     overflow: hidden;
+    height: 100%;
 }
 
 ::-webkit-scrollbar {
+    display: none;
     width: 0;
     background: transparent;
 }
@@ -17,5 +18,9 @@ html{
     background-color: transparent;
     display: none;
     border-radius: 10px;
-
 }
+
+.hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
