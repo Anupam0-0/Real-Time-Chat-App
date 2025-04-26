@@ -3,9 +3,10 @@ import Avatar from '/public/avatar.png'
 import SearchUserModal from './SearchUserModal'
 import { MessageSquarePlus, EllipsisVertical } from 'lucide-react'
 import { FriendList } from '../../lib/axios'
+import { set } from 'lodash'
 
 
-const Sidebar = () => {
+const Sidebar = ({ screen, setScreen }) => {
     const [friends, setFriends] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -13,7 +14,7 @@ const Sidebar = () => {
         const fetchFriends = async () => {
             try {
                 const response = await FriendList();
-                console.log(response);
+                // console.log(response);
                 setFriends(response);
             } catch (error) {
                 console.error('Error fetching friends:', error)
@@ -25,7 +26,9 @@ const Sidebar = () => {
         fetchFriends()
     }, [])
 
-
+    const handleScreen = (item) => {
+        setScreen(item);
+    }
 
     return (
         <div>
@@ -33,21 +36,21 @@ const Sidebar = () => {
                 <Header />
                 <SearchUserModal />
                 {/* chats */}
-                <div className='mt-4'>
+                <div className='mt-4 flex flex-col gap-1'>
                     {
                         friends.map((item, i) => (
-                            <div key={i} className='cursor-pointer transition-all ease-in-out duration-300'>
+                            <button onClick={()=>handleScreen(item)} key={i} className='cursor-pointer transition-all ease-in-out duration-300'>
                                 <div className='h-20 hover:bg-base-100 text-xl flex gap-4 items-center px-8 text-slate-50/80'>
-                                <img src={item.profilePic || Avatar} className='size-12' />
-                                <div className='flex flex-col gap-1'>
-                                <p className='uppercase' >{item.username}</p>
-                                <p className='text-sm text-slate-50/50 capitalize'>{item.fullName}</p>
+                                    <img src={item.profilePic || Avatar} className='size-12' />
+                                    <div className='flex flex-col items-start gap-1'>
+                                        <p className='uppercase' >{item.username}</p>
+                                        <p className='text-sm text-slate-50/50 capitalize'>{item.fullName}</p>
+
+                                    </div>
+
 
                                 </div>
-                                
-                                
-                                </div>
-                            </div>
+                            </button>
                         ))
                     }
                 </div>

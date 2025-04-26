@@ -27,7 +27,7 @@ const Navbar = () => {
                 <h1 className='text-2xl font-medium tracking-wide group-hover:text-neutral-900'>mono<span className='text-green-400/90'>chat</span></h1>
                 <div className='gap-6 hidden lg:flex text-md text-slate-50/90 relative left-10 capitalize'>
                     <button onMouseOver={() => setIsOpen(true)} onClick={() => setIsOpen(!isOpen)} className='px-4 cursor-pointer flex items-center gap-1'>Features <span className='relative top-[1px]'>{ !isOpen ? <ChevronDown size={20}/> : <ChevronUp size={20}/>}</span> </button>
-                    <button onClick={() => toast("It's free to use 😇", {style: {width: "50rem", height:"4rem"}})} className='px-4 cursor-pointer'>Pricing</button>
+                    <button onClick={() => toast("It's free to use 😇", {style: {width: "50rem", height:"4rem", marginTop:"4rem"}})} className='px-4 cursor-pointer'>Pricing</button>
                     <a href='/contact' className='px-4 cursor-pointer'>Help Center</a>
                     <a href='/contact' className='px-4 cursor-pointer'>Contact</a>
                 </div>

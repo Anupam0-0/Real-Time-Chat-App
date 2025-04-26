@@ -12,19 +12,22 @@ const messageSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    text: {
+    message: {
       type: String,
       required: true,
+    },
+    seen: { 
+      type: Boolean, 
+      default: false 
     },
     image: {
       type: String,
     },
     timestamp: {
-       type: Date, 
-       default: Date.now 
+      type: Date,
+      default: Date.now,
     },
-  },
-  { timestamps: true } // Automatically add createdAt and updatedAt timestamps
+  }, // Automatically add createdAt and updatedAt timestamps
 );
 
 const Message = mongoose.model("Message", messageSchema);

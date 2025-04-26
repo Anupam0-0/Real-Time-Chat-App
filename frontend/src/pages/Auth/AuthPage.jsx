@@ -1,15 +1,19 @@
+import { useEffect } from 'react'
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import BackgroundElements from './ui/BackgroundElements';
 import useAuthStore from '../../store/useAuthStore';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 const AuthPage = () => {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
-  if(user){
-    navigate('/chat');
-  }
+
+  useEffect(() => {
+    if (user) {
+      navigate('/chat');
+    }
+  }, [user, navigate]);
 
   return (
     <div className="h-screen overflow-y-auto bg-[#F5FAF6] w-full relative md:overflow-hidden">
