@@ -3,6 +3,8 @@ import React from 'react'
 import useAuthStore from '../../store/useAuthStore'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-hot-toast'
+import Avatar from '/public/avatar.png'
+
 
 
 
@@ -31,8 +33,8 @@ const ChatNavbar = () => {
             <div className='h-full flex flex-col items-center justify-between'>
                 <div className='flex flex-col gap-4'>
                     <button onClick={getUser} className="avatar p-2 cursor-pointer">
-                        <div className="w-8 rounded-full">
-                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                        <div className="w-10 rounded-full">
+                            <img src={'' || Avatar} />
                         </div>
                     </button>
 

@@ -20,11 +20,11 @@ export default Home
 
 function Main() {
   return (
-    <div className='w-[60rem] mx-auto absolute top-8 left-72 flex flex-col gap-6'>
+    <div className='hidden xl:flex w-[60rem]  mx-auto relative -top-14 flex-col gap-6'>
       {/* blocks-1 */}
       <div className='flex gap-4 items-end'>
         {/* sq. blue box */}
-        <div className='bg-blue-400 text-black rounded-4xl px-4 py-4 size-40 flex flex-col justify-between'>
+        <div className='bg-blue-400  text-black rounded-4xl px-4 py-4 size-40 flex flex-col justify-between'>
           <div>
             <p className='text-lg tracking-tight '>messages</p>
             <p className='text-3xl font-bold'>12</p>
@@ -109,7 +109,7 @@ function Main() {
           <p className='text-slate-50/80'>11:34am</p>
         </div>
 
-        <div className='bg-blue-400 text-black rounded-2xl px-3 py-2 h-fit w-[20rem] flex justify-between'>
+        <div className='bg-blue-400  text-black rounded-2xl px-3 py-2 h-fit w-[20rem] flex justify-between'>
           <div className="avatar size-12 rounded-full">
             <div className="w-24 rounded-full">
               <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
@@ -158,7 +158,7 @@ function Texts() {
   return (
     <>
       {/* top-left */}
-      <div className='w-64 text-3xl leading-[2.1rem] text-white/90 absolute top-32 right-20 p-12'>
+      <div className='block w-64 text-3xl leading-[2.1rem] text-white/90 absolute top-32 right-20 p-12'>
         <div className='relative drop-shadow-2xl' >
           <MessageSquare size={295} strokeWidth={0.2} />
           <div className='absolute top-12 left-11.5 text-[2.5rem] font-bold'>

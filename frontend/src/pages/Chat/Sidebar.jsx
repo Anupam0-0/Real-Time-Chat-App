@@ -1,20 +1,52 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
+import Avatar from '/public/avatar.png'
 import SearchUserModal from './SearchUserModal'
 import { MessageSquarePlus, EllipsisVertical } from 'lucide-react'
+import { FriendList } from '../../lib/axios'
 
 
 const Sidebar = () => {
+    const [friends, setFriends] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const fetchFriends = async () => {
+            try {
+                const response = await FriendList();
+                console.log(response);
+                setFriends(response);
+            } catch (error) {
+                console.error('Error fetching friends:', error)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        fetchFriends()
+    }, [])
+
+
+
     return (
         <div>
             <div className='border-x bg-base-200 hide-scrollbar border-slate-50/20 text-slate-50/80 overflow-y-auto h-screen'>
                 <Header />
                 <SearchUserModal />
                 {/* chats */}
-                <div className=''>
+                <div className='mt-4'>
                     {
-                        Array.from({ length: 12 }, (_, i) => (
+                        friends.map((item, i) => (
                             <div key={i} className='cursor-pointer transition-all ease-in-out duration-300'>
-                                <div className='h-16 hover:bg-base-100 text-lg flex items-center px-8 text-slate-50/80'>Number {i}</div>
+                                <div className='h-20 hover:bg-base-100 text-xl flex gap-4 items-center px-8 text-slate-50/80'>
+                                <img src={item.profilePic || Avatar} className='size-12' />
+                                <div className='flex flex-col gap-1'>
+                                <p className='uppercase' >{item.username}</p>
+                                <p className='text-sm text-slate-50/50 capitalize'>{item.fullName}</p>
+
+                                </div>
+                                
+                                
+                                </div>
                             </div>
                         ))
                     }
@@ -29,7 +61,7 @@ export default Sidebar
 
 function Header() {
     return (
-        <div className='flex flex-col gap-6 border-b border-slate-50/10 pt-2 pb-1 sticky top-0 bg-base-300'>
+        <div className='flex flex-col gap-6  py-2 sticky top-0 bg-base-200'>
             <div className='flex items-center justify-between pl-4 pr-2 '>
                 <h1 className='text-bold text-2xl text-white/90' >Chat</h1>
                 <div className='flex items-center gap-4'>

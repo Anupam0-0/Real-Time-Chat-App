@@ -9,7 +9,7 @@ export const friendsList = async (req, res) => {
   try {
     const user = await User.findById(userId).populate(
       "friends",
-      "_id username profilePic"
+      "_id username profilePic fullName"
     );
     res.status(200).json(user.friends);
   } catch (error) {

@@ -25,9 +25,21 @@ export const AddFriend = async (friendId) => {
         if (res.status === 200) {
             const ans = 'added';
             return ans; // Return the status of the response
-        }// Return the status of the response
+        }
     } catch (error) {
         console.error("Error in handleAddFriend:", error.message);
+        throw error; // Rethrow the error to be handled by the calling function 
+    }
+}
+
+export const FriendList = async () => {
+    try {
+        const res = await axiosInstance.get(`/friends/list`);
+        if (res.status === 200) {
+            return res.data; // Return the list of friends
+        }
+    } catch (error) {
+        console.error("Error in FriendList:", error.message);
         throw error; // Rethrow the error to be handled by the calling function 
     }
 }
