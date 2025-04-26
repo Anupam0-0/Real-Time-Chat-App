@@ -32,6 +32,7 @@ export const signup = async (req, res) => {
       await newUser.save();
 
       res.status(200).json({
+        userId: newUser._id,
         message: "Signup successful"
       });
     } else {
@@ -60,6 +61,7 @@ export const login = async (req, res) => {
     generateToken(user._id, res);
 
     res.status(200).json({
+      userId: user._id,
       message: "Login successful"
     });
   } catch (error) {

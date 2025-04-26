@@ -1,16 +1,23 @@
 import { Settings, MessageSquareMore, Users, QrCode, LogOut } from 'lucide-react'
 import React from 'react'
+import useAuthStore from '../../store/useAuthStore'
 
 const ChatNavbar = () => {
+
+    const getUser = () => {
+        const user = useAuthStore.getState().user;
+        alert(user);
+    }
+
     return (
         <div className='bg-base-200 p-6 h-screen'>
             <div className='h-full flex flex-col items-center justify-between'>
                 <div className='flex flex-col gap-4'>
-                    <div className="avatar p-2">
+                    <button onClick={getUser} className="avatar p-2">
                         <div className="w-8 rounded-full">
                             <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
                         </div>
-                    </div>
+                    </button>
 
                     <div className='hover:bg-base-100 rounded-full p-2 flex items-center justify-center cursor-pointer transition-all ease-in-out duration-300'>
                         <MessageSquareMore size={30} strokeWidth={1.9} />

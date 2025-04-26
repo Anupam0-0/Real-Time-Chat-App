@@ -2,13 +2,11 @@ import React from 'react';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import BackgroundElements from './ui/BackgroundElements';
-import { MessageSquare } from 'lucide-react';
 
 const AuthPage = () => {
   return (
-    <div className="min-h-screen bg-[#F5FAF6] w-full relative overflow-hidden">
+    <div className="h-screen overflow-y-auto bg-[#F5FAF6] w-full relative md:overflow-hidden">
       <BackgroundElements />
-
       
       <div className="container mx-auto px-4 py-8 relative z-10 flex flex-col items-center">
         

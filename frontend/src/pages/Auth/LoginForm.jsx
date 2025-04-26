@@ -3,12 +3,15 @@ import FormInput from './ui/FormInput';
 import Button from './ui/Button';
 import SocialButtons from './ui/SocialButtons';
 import { toast } from 'react-hot-toast';
+import apiInstance from '../../lib/axios'; // Adjust the import based on your project structure
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const validateForm = () => {
     const newErrors = {};
@@ -25,12 +28,26 @@ const LoginForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log('Login form submitted', { username, password, rememberMe });
-      // Handle login logic here
+      console.log('Signup form submitted', { username, password }); // Changed from email to username
+
+      const res = await apiInstance.post('/auth/login', {
+        username: username, password: password }// Changed from email to username
+      );
+
+      const data = await res.data;
+      console.log(data);
+      if (data) {
+        toast.success('Account created successfully!', data);
+        localStorage.setItem('userId', data.userId); // Store the token in local storage
+      } else {
+        toast.error(data.message || 'Something went wrong!');
+      } 
     }
+
+    navigate('/chat'); // Redirect to the home page after successful login
   };
 
   return (

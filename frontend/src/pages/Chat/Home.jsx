@@ -2,6 +2,8 @@ import React from 'react'
 import useThemeStore from "../../store/useThemeStore";
 import ChatNavbar from './ChatNavbar';
 import Sidebar from './Sidebar';
+import toast from 'react-hot-toast';
+import apiInstance from '../../lib/axios'; // Adjust the import based on your project structure
 
 const Home = () => {
 
@@ -24,6 +26,7 @@ const Home = () => {
                 {/* Main */}
                 <div className='col-span-1 md:col-span-14 overflow-y-auto h-screen bg-base-100'>
 
+                    
                 </div>
             </div>
 

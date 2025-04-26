@@ -3,6 +3,9 @@ import FormInput from './ui/FormInput';
 import Button from './ui/Button';
 import SocialButtons from './ui/SocialButtons';
 import PasswordStrength from './ui/PasswordStrength';
+import { toast } from 'react-hot-toast';
+import apiInstance from '../../lib/axios'; // Adjust the import based on your project structure
+import { useNavigate } from 'react-router'; // Import useNavigate from react-router-dom
 
 const SignupForm = () => {
   const [name, setName] = useState('');
@@ -11,44 +14,62 @@ const SignupForm = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate(); // Import useNavigate from react-router-dom
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!name.trim()) {
       newErrors.name = 'Name is required';
     }
-    
+
     if (!username) { // Changed from email to username
       newErrors.username = 'Username is required';
     } else if (username.length < 4) { // Added validation for username length
       newErrors.username = 'Username must be at least 4 characters';
     }
-    
+
     if (!password) {
       newErrors.password = 'Password is required';
     } else if (password.length < 8) {
       newErrors.password = 'Password must be at least 8 characters';
     }
-    
+
     if (password !== confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
     }
-    
+
     if (!agreeTerms) {
       newErrors.agreeTerms = 'You must agree to the terms';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
       console.log('Signup form submitted', { name, username, password, agreeTerms }); // Changed from email to username
-      // Handle signup logic here
+
+      const res = await apiInstance.post('/auth/signup', {
+        fullName: name, username: username, password: password
+      }// Changed from email to username
+      );
+
+      const data = await res.data;
+      console.log(data);
+      if (data) {
+        toast.success('Account created successfully!', data);
+        localStorage.setItem('userId', data.userId); // Store the token in local storage
+
+
+      } else {
+        toast.error(data.message || 'Something went wrong!');
+      }
     }
+
+    navigate('/chat');
   };
 
   return (
@@ -57,7 +78,7 @@ const SignupForm = () => {
         <h2 className="text-2xl font-bold text-gray-800 mb-2">Create Account</h2>
         <p className="text-gray-500">Join ChatSphere today</p>
       </div>
-      
+
       <form onSubmit={handleSubmit}>
         <FormInput
           label="Full Name"
@@ -67,7 +88,7 @@ const SignupForm = () => {
           error={errors.name}
           iconColor="pink"
         />
-        
+
         <FormInput
           label="Username" // Changed label from Email to Username
           type="text" // Changed type from email to text
@@ -76,7 +97,7 @@ const SignupForm = () => {
           error={errors.username} // Changed from errors.email to errors.username
           iconColor="pink"
         />
-        
+
         <FormInput
           label="Password"
           type="password"
@@ -85,9 +106,9 @@ const SignupForm = () => {
           error={errors.password}
           iconColor="pink"
         />
-        
+
         {password && <PasswordStrength password={password} />}
-        
+
         <FormInput
           label="Confirm Password"
           type="password"
@@ -96,7 +117,7 @@ const SignupForm = () => {
           error={errors.confirmPassword}
           iconColor="pink"
         />
-        
+
         <div className="mb-6">
           <label className="flex items-start cursor-pointer group">
             <div className="relative mt-0.5">
@@ -106,22 +127,21 @@ const SignupForm = () => {
                 checked={agreeTerms}
                 onChange={() => setAgreeTerms(!agreeTerms)}
               />
-              <div className={`w-4 h-4 border rounded transition-colors ${
-                agreeTerms 
-                  ? 'bg-pink-500 border-pink-500' 
-                  : errors.agreeTerms 
-                    ? 'border-red-500' 
+              <div className={`w-4 h-4 border rounded transition-colors ${agreeTerms
+                  ? 'bg-pink-500 border-pink-500'
+                  : errors.agreeTerms
+                    ? 'border-red-500'
                     : 'border-gray-300 group-hover:border-pink-400'
-              }`}>
+                }`}>
                 {agreeTerms && (
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     className="w-4 h-4 text-white"
                   >
                     <polyline points="20 6 9 17 4 12"></polyline>
@@ -139,17 +159,17 @@ const SignupForm = () => {
             </div>
           </label>
         </div>
-        
-        <Button 
-          type="submit" 
-          variant="primary" 
-          color="pink" 
+
+        <Button
+          type="submit"
+          variant="primary"
+          color="pink"
           fullWidth
         >
           Create Account
         </Button>
       </form>
-      
+
       <div className="mt-6">
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
@@ -159,7 +179,7 @@ const SignupForm = () => {
             <span className="px-2 bg-gradient-to-br from-pink-50 to-blue-50 text-gray-500">Or sign up with</span>
           </div>
         </div>
-        
+
         <SocialButtons />
       </div>
     </div>

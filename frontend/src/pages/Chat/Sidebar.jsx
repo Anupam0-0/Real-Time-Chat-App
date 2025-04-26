@@ -37,7 +37,7 @@ function Header() {
             </div>
 
             <div className='px-4 pb-2'>
-                <input type="text" className='bg-sky-500/20 w-full px-6 py-2 text-md rounded-2xl outline-none text-green-50/70 capitalize' />
+                <input type="text" className='bg-green-100/30 w-full px-6 py-2 text-md rounded-2xl outline-none text-green-50/70 capitalize' />
             </div>
 
         </div>
