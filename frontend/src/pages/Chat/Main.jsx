@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Avatar from '/public/avatar.png'
 import { Send, Link } from 'lucide-react'
 import useAuthStore from '../../store/useAuthStore';
-import { socket, sendMessage } from '../../lib/socket';
+import { socket, sendMessage, checkConnection } from '../../lib/socket';
 
 
 const Main = ({ screen }) => {
@@ -50,18 +50,25 @@ function Chat({ screen, user }) {
         }
     }
 
+    const handleCheck = () => {
+        alert('Checking connection...')
+        checkConnection();
+    }
+
     return (
         <div className='flex flex-col justify-between h-screen'>
-            <div class="navbar bg-base-100 shadow-sm px-8 py-4">
+            <div className="navbar bg-base-100 shadow-sm px-8 py-4">
                 <div className="avatar">
                     <div className="w-12 rounded-full">
                         <img src={screen.profilePic || Avatar} />
                     </div>
                 </div>
-                <a class="btn btn-ghost text-xl uppercase tracking-wide">{screen.username}</a>
+                <a className="btn btn-ghost text-xl uppercase tracking-wide">{screen.username}</a>
             </div>
 
             <div className='h-fit bg-base-100 overflow-y-auto'>
+                <button  onClick={(()=>handleCheck())} className='px-2 bg-fuchsia-500'>CheckSocket</button>
+                
                 {/* Messages */}
                 <div className="flex-1 overflow-y-auto p-4 space-y-2">
                     {messages.map((msg, idx) => (

@@ -5,7 +5,7 @@ import SocialButtons from './ui/SocialButtons';
 import { toast } from 'react-hot-toast';
 import apiInstance from '../../lib/axios'; // Adjust the import based on your project structure
 import { useNavigate } from 'react-router-dom';
-import useAuthStore  from '../../store/useAuthStore';
+import useAuthStore from '../../store/useAuthStore';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -13,6 +13,8 @@ const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  const setUser = useAuthStore((state) => state.setUser); // Move this to the top level of the component
 
   const validateForm = () => {
     const newErrors = {};
@@ -31,32 +33,32 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const setUser = useAuthStore((state) => state.setUser); // Get the setUser function from the store
 
     if (validateForm()) {
-      console.log('Signup form submitted', { username, password }); // Changed from email to username
+      try {
+        const res = await apiInstance.post('/auth/login', {
+          username,
+          password,
+        });
 
-      const res = await apiInstance.post('/auth/login', {
-        username: username, password: password
-      }// Changed from email to username
-      );
-
-      const data = await res.data;
-      console.log(data);
-      if (data) {
-        toast.success('Account created successfully!', data);
-        await setUser(data.userId); // Set the user ID in the store
-        localStorage.setItem('userId', data.userId); // Store the token in local storage
-      } else {
-        toast.error(data.message || 'Something went wrong!');
+        const data = res.data;
+        if (data && data.userId) {
+          toast.success('Login successful!');
+          await setUser(data.userId); // Use the setUser function here
+          localStorage.setItem('userId', data.userId);
+          navigate('/chat');
+        } else {
+          toast.error(data?.message || 'Invalid credentials. Please try again.');
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        toast.error('An error occurred while logging in. Please try again.');
       }
     }
-
-    navigate('/chat'); // Redirect to the home page after successful login
   };
 
   return (
-    <div className="p-8 md:p-10 ">
+    <div className="p-8 md:p-10">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">Welcome back</h2>
         <p className="text-gray-500">Sign in to continue to ChatSphere</p>
@@ -90,8 +92,13 @@ const LoginForm = () => {
                 checked={rememberMe}
                 onChange={() => setRememberMe(!rememberMe)}
               />
-              <div className={`w-4 h-4 border rounded transition-colors ${rememberMe ? 'bg-blue-500 border-blue-500' : 'border-gray-300 group-hover:border-blue-400'
-                }`}>
+              <div
+                className={`w-4 h-4 border rounded transition-colors ${
+                  rememberMe
+                    ? 'bg-blue-500 border-blue-500'
+                    : 'border-gray-300 group-hover:border-blue-400'
+                }`}
+              >
                 {rememberMe && (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -108,20 +115,21 @@ const LoginForm = () => {
                 )}
               </div>
             </div>
-            <span className="ml-2 text-sm text-gray-600 group-hover:text-gray-800">Remember me</span>
+            <span className="ml-2 text-sm text-gray-600 group-hover:text-gray-800">
+              Remember me
+            </span>
           </label>
 
-          <button onClick={() => toast("Yup Working on that")} className="text-sm text-blue-500 hover:text-blue-700 transition-colors cursor-pointer">
+          <button
+            type="button"
+            onClick={() => toast.error('Feature not implemented yet')}
+            className="text-sm text-blue-500 hover:text-blue-700 transition-colors cursor-pointer"
+          >
             Forgot password?
           </button>
         </div>
 
-        <Button
-          type="submit"
-          variant="primary"
-          color="blue"
-          fullWidth
-        >
+        <Button type="submit" variant="primary" color="blue" fullWidth>
           Sign In
         </Button>
       </form>

@@ -45,7 +45,7 @@ const BackgroundElements = () => {
         }}
       />
 
-      <button onClick={checkBackend} className='border size-10 border-black rounded-full relative -left-2 -top-2 z-10 pointer-events-auto'>hello
+      <button onClick={checkBackend} className='border size-10 border-black rounded-full relative -left-2 -top-2 z-20 pointer-events-auto cursor-pointer'>hello
       </button>
       <img src="https://paintingvalley.com/drawings/cherry-blossom-tree-drawing-5.jpg" alt="tree"
         className='object-cover h-96 absolute bottom-0 left-0' />

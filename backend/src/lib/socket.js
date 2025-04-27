@@ -5,37 +5,44 @@ import express from "express";
 const app = express();
 const server = createServer(app);
 
+// used to store the socket id of the user
+const userSocketMap = {}; // {userId: socketId}
+const reverseSocketMap = {}; // {socketId: userId}
+
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL,
-    methods: ["GET", "POST"],
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   },
 });
+
 
 export function getReceiverSocketId(userId) {
   return userSocketMap[userId] || null;
 }
 
-// used to store the socket id of the user
-const userSocketMap = {}; // {userId: socketId}
 
 io.on("connection", (socket) => {
   console.log("New socket connection", socket.id);
+  console.log("userId from frontend:", socket.handshake.auth.userId);
 
-  socket.on('joinRoom', ({roomId}) => {
-    socket.join(roomId);
-    console.log(`User: ${socket.id} joined room: ${roomId}`);
-  })
 
-  socket.on('sendMessage', ({roomId, message}) => {
-    socket.to(roomId).emit('receiveMessage', message);
-    console.log(`Message sent to room: ${roomId}`, message);
-  })
+
+
+
+
 
   socket.on("disconnect", () => {
-    console.log("User disconnected:", userId, socket.id);
+    console.log("User disconnected:", socket.id);
   });
+
 });
 
 export { app, server, io };
+
+
+
+
+
+
