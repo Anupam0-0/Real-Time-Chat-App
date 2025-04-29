@@ -2,7 +2,7 @@ import axios from 'axios';
 import useAuthStore from '../store/useAuthStore'; 
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3000/api',
+    baseURL: import.meta.env.MODE === "development" ? 'http://localhost:3000/api' : '/api',
     withCredentials: true, // key to send cookies
 })
 

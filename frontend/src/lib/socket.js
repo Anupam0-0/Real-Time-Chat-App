@@ -5,9 +5,13 @@ const userId = useAuthStore.getState().user;
 
 let socket = null; 
 
+// const baseURL = import.meta.env.MODE === "development" ? 'http://localhost:3000' : '/';
+const baseURL = "/"
+
+
 export const connectSocket = (userId) => {
   if (!socket) {
-    socket = io("http://localhost:3000", {
+    socket = io(baseURL , {
       auth: { userId },
     });
 
@@ -15,9 +19,9 @@ export const connectSocket = (userId) => {
       console.log("✅ Connected with socket ID:", data.socketId);
     });
 
-    socket.on("receiveMessage", (message) => {
-      // console.log("📩 Message received:", message);
-    });
+    // socket.on("receiveMessage", (message) => {
+    //    console.log("📩 Message received:", message);
+    // });
 
     socket.on("disconnect", () => {
       console.log("❌ Socket disconnected");
