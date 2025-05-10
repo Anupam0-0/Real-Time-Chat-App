@@ -3,9 +3,8 @@ import FormInput from './ui/FormInput';
 import Button from './ui/Button';
 import SocialButtons from './ui/SocialButtons';
 import { toast } from 'react-hot-toast';
-import apiInstance from '../../lib/axios'; // Adjust the import based on your project structure
+import { handleLogin } from '../../lib/axios'; // Adjust the import based on your project structure
 import { useNavigate } from 'react-router-dom';
-import useAuthStore from '../../store/useAuthStore';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -13,8 +12,6 @@ const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-
-  const setUser = useAuthStore((state) => state.setUser); // Move this to the top level of the component
 
   const validateForm = () => {
     const newErrors = {};
@@ -36,23 +33,22 @@ const LoginForm = () => {
 
     if (validateForm()) {
       try {
-        const res = await apiInstance.post('/auth/login', {
+        const responseData = await handleLogin({
           username,
           password,
         });
-
-        const data = res.data;
-        if (data && data.userId) {
+        
+        const {userId, message} = responseData;
+        // console.log('Login response:', responseData);
+        if (userId && message) {
           toast.success('Login successful!');
-          await setUser(data.userId); // Use the setUser function here
-          localStorage.setItem('userId', data.userId);
           navigate('/chat');
-        } else {
-          toast.error(data?.message || 'Invalid credentials. Please try again.');
+        }else {
+          toast.error('Login failed. Please check your credentials.');
         }
       } catch (error) {
         console.error('Login error:', error);
-        toast.error('An error occurred while logging in. Please try again.');
+        toast.error(`Error: ${error.response.data.message || 'An error occurred. Please try again.'}`); 
       }
     }
   };

@@ -97,7 +97,7 @@ function Chat({ screen, user }) {
             </div>
 
             <div className="h-fit bg-base-100 overflow-y-auto">
-                <button onClick={() => handleCheck()} className="px-2 bg-fuchsia-500">
+                <button onClick={() => handleCheck()} className="px-2 bg-fuchsia-500 cursor-pointer">
                     CheckSocket
                 </button>
 

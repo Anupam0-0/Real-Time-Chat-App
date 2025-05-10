@@ -5,11 +5,21 @@ let socket = null;
 
 export const connectSocket = () => {
   const userId = useAuthStore.getState().user;
+  console.log("User ID:", userId);
+
+  if (!userId){
+    console.error("User ID is not available. Cannot connect socket.");
+    return;
+  }
   
+
   if (!socket) {
     socket = io("http://localhost:3000", {
       auth: {
         userId: userId,
+        reconnection: true,
+        reconnectionAttempts: 5,
+        reconnectionDelay: 1000,
       },
     });
 
@@ -25,11 +35,12 @@ export const connectSocket = () => {
       console.error("🚨 Connection error:", err.message);
     });
 
+    socket.off("receiveMessage"); // Remove any previous handler
     socket.on("receiveMessage", (message) => {
       console.log("📨 Message received:", message);
     });
   }
-  
+
   return socket;
 };
 

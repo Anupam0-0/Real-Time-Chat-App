@@ -6,13 +6,14 @@ const userId = useAuthStore.getState().user;
 let socket = null; 
 
 // const baseURL = import.meta.env.MODE === "development" ? 'http://localhost:3000' : '/';
-const baseURL = "/"
+const baseURL = "http://localhost:5173/"
 
 
 export const connectSocket = (userId) => {
   if (!socket) {
     socket = io(baseURL , {
       auth: { userId },
+      withCredentials: true,
     });
 
     socket.on("connected", (data) => {
@@ -28,7 +29,7 @@ export const connectSocket = (userId) => {
     });
 
     socket.on("connect_error", (err) => {
-      console.error("🚨 Socket connection error:", err.message);
+      console.error("🚨 Socket connection error:", err);
     });
   }
 };
@@ -59,6 +60,7 @@ export const sendMessage = ({friendId, myId, content}) => {
 
 export const checkConnection = () => {
   socket.emit("check", userId);
+  console.log("Checking connection for user:", userId);
 };
 
 export const getSocket = () => socket;

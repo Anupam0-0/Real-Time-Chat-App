@@ -63,9 +63,9 @@ function SearchUserModal() {
                             searchResults
                                 .filter((user) => user._id !== userId) // Filter out the current user
                                 .map((user) => (
-                                    <div key={user._id} className='flex border-b border-slate-50/50 py-2.5 px-8 justify-between items-center cursor-pointer transition-all ease-in-out duration-300 '>
-                                        <div className='h-10 hover:bg-base-100 text-lg flex items-center text-slate-50/80 uppercase'>{user.username}</div>
-                                        <button onClick={() => handleAddFriend(user._id)} className='bg-pink-600 font-medium px-5 py-1.5 rounded-xl text-white hover:shadow-lg uppercase tracking-wider'>Add</button>
+                                    <div key={user._id} className='flex border-b hover:bg-base-100 rounded-4xl hover:shadow-lg border-slate-50/50 py-2.5 px-4 justify-between items-center transition-all ease-in-out duration-300 group'>
+                                        <div className='h-10  text-lg flex items-center text-slate-50/80 uppercase'>{user.username}</div>
+                                        <button onClick={() => handleAddFriend(user._id)} className='bg-sky-500 font-medium px-5 py-1.5 rounded-2xl text-white group-hover:shadow-2xl/20 group-hover:border border-slate-50/50 uppercase cursor-pointer relative tracking-wider'>Add</button>
                                     </div>
                                 ))
                         ) : (

@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import FormInput from './ui/FormInput';
-import Button from './ui/Button';
-import SocialButtons from './ui/SocialButtons';
-import PasswordStrength from './ui/PasswordStrength';
-import { toast } from 'react-hot-toast';
-import apiInstance from '../../lib/axios'; // Adjust the import based on your project structure
-import { useNavigate } from 'react-router'; // Import useNavigate from react-router-dom
+import React, { useState } from "react";
+import FormInput from "./ui/FormInput";
+import Button from "./ui/Button";
+import SocialButtons from "./ui/SocialButtons";
+import PasswordStrength from "./ui/PasswordStrength";
+import { toast } from "react-hot-toast";
+import apiInstance, { handleSignup } from "../../lib/axios"; // Adjust the import based on your project structure
+import { useNavigate } from "react-router"; // Import useNavigate from react-router-dom
 
 const SignupForm = () => {
-  const [name, setName] = useState('');
-  const [username, setUsername] = useState(''); // Changed from email to username
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState(""); // Changed from email to username
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate(); // Import useNavigate from react-router-dom
@@ -20,27 +20,29 @@ const SignupForm = () => {
     const newErrors = {};
 
     if (!name.trim()) {
-      newErrors.name = 'Name is required';
+      newErrors.name = "Name is required";
     }
 
-    if (!username) { // Changed from email to username
-      newErrors.username = 'Username is required';
-    } else if (username.length < 4) { // Added validation for username length
-      newErrors.username = 'Username must be at least 4 characters';
+    if (!username) {
+      // Changed from email to username
+      newErrors.username = "Username is required";
+    } else if (username.length < 4) {
+      // Added validation for username length
+      newErrors.username = "Username must be at least 4 characters";
     }
 
     if (!password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = "Password is required";
     } else if (password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters';
+      newErrors.password = "Password must be at least 8 characters";
     }
 
     if (password !== confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
+      newErrors.confirmPassword = "Passwords do not match";
     }
 
     if (!agreeTerms) {
-      newErrors.agreeTerms = 'You must agree to the terms';
+      newErrors.agreeTerms = "You must agree to the terms";
     }
 
     setErrors(newErrors);
@@ -48,37 +50,47 @@ const SignupForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    try{
-    e.preventDefault();
-    if (validateForm()) {
-      console.log('Signup form submitted', { name, username, password, agreeTerms }); // Changed from email to username
+    try {
+      e.preventDefault();
 
-      const res = await apiInstance.post('/auth/signup', {
-        fullName: name, username: username, password: password
-      }// Changed from email to username
-      );
+      // to validate the form before submission
+      if (validateForm()) {
+        console.log("Signup form submitted", {
+          name,
+          username,
+          password,
+          agreeTerms,
+        }); 
 
-      const data = await res.data;
-      console.log(data);
+        const responseData = handleSignup({
+          name,
+          username, // Changed from email to username
+          password,
+          agreeTerms,
+        });
 
-      if (data) {
-        toast.success('Account created successfully!', data);
-        localStorage.setItem('userId', data.userId); // Store the token in local storage
-        navigate('/chat');
-      } else {
-        toast.error(data.message || 'Something went wrong!');
+        const data = await responseData;
+
+
+        if (data) {
+          toast.success("Account created successfully!", data);
+          navigate("/chat");
+        } else {
+          toast.error("Signup Failed!");
+        }
       }
+    } catch (error) {
+      console.error("Error in handleSubmit:", error);
+      toast.error("Failed to create account. Please try again.");
     }
-  } catch (error) {
-    console.error("Error in handleSubmit:", error);
-    toast.error('Failed to create account. Please try again.');
-  }
   };
 
   return (
     <div className="p-8 md:p-10 bg-gradient-to-br from-pink-50 to-blue-50">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Create Account</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          Create Account
+        </h2>
         <p className="text-gray-500">Join ChatSphere today</p>
       </div>
 
@@ -130,12 +142,15 @@ const SignupForm = () => {
                 checked={agreeTerms}
                 onChange={() => setAgreeTerms(!agreeTerms)}
               />
-              <div className={`w-4 h-4 border rounded transition-colors ${agreeTerms
-                  ? 'bg-pink-500 border-pink-500'
-                  : errors.agreeTerms
-                    ? 'border-red-500'
-                    : 'border-gray-300 group-hover:border-pink-400'
-                }`}>
+              <div
+                className={`w-4 h-4 border rounded transition-colors ${
+                  agreeTerms
+                    ? "bg-pink-500 border-pink-500"
+                    : errors.agreeTerms
+                    ? "border-red-500"
+                    : "border-gray-300 group-hover:border-pink-400"
+                }`}
+              >
                 {agreeTerms && (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -154,7 +169,14 @@ const SignupForm = () => {
             </div>
             <div className="ml-2">
               <span className="text-sm text-gray-600 group-hover:text-gray-800">
-                I agree to the <a href="#" className="text-pink-500 hover:text-pink-700">Terms of Service</a> and <a href="#" className="text-pink-500 hover:text-pink-700">Privacy Policy</a>
+                I agree to the{" "}
+                <a href="#" className="text-pink-500 hover:text-pink-700">
+                  Terms of Service
+                </a>{" "}
+                and{" "}
+                <a href="#" className="text-pink-500 hover:text-pink-700">
+                  Privacy Policy
+                </a>
               </span>
               {errors.agreeTerms && (
                 <p className="text-xs text-red-500 mt-1">{errors.agreeTerms}</p>
@@ -163,12 +185,7 @@ const SignupForm = () => {
           </label>
         </div>
 
-        <Button
-          type="submit"
-          variant="primary"
-          color="pink"
-          fullWidth
-        >
+        <Button type="submit" variant="primary" color="pink" fullWidth>
           Create Account
         </Button>
       </form>
@@ -179,7 +196,9 @@ const SignupForm = () => {
             <div className="w-full border-t border-gray-200"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-gradient-to-br from-pink-50 to-blue-50 text-gray-500">Or sign up with</span>
+            <span className="px-2 bg-gradient-to-br from-pink-50 to-blue-50 text-gray-500">
+              Or sign up with
+            </span>
           </div>
         </div>
 

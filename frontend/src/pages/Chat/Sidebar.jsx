@@ -32,23 +32,20 @@ const Sidebar = ({ screen, setScreen }) => {
 
     return (
         <div>
-            <div className='border-x bg-base-200 hide-scrollbar border-slate-50/20 text-slate-50/80 overflow-y-auto h-screen'>
+            <div className='border-x bg-base-200 hide-scrollbar border-slate-50/20 text-slate-50/80 overflow-y-auto overflow-x-hidden h-screen'>
                 <Header />
                 <SearchUserModal />
                 {/* chats */}
-                <div className='mt-4 flex flex-col gap-1'>
+                <div className='mt-4 flex flex-col gap-1 '>
                     {
                         friends.map((item, i) => (
-                            <button onClick={()=>handleScreen(item)} key={i} className='cursor-pointer transition-all ease-in-out duration-300'>
-                                <div className='h-20 hover:bg-base-100 text-xl flex gap-4 items-center px-8 text-slate-50/80'>
+                            <button onClick={() => handleScreen(item)} key={i} className='cursor-pointer transition-all ease-in-out duration-300'>
+                                <div className=' hover:bg-base-100 flex gap-2 lg:gap-4 py-5 items-center px-2.5 md:px-6 text-slate-50/80'>
                                     <img src={item.profilePic || Avatar} className='size-12' />
                                     <div className='flex flex-col items-start gap-1'>
-                                        <p className='uppercase' >{item.username}</p>
-                                        <p className='text-sm text-slate-50/50 capitalize'>{item.fullName}</p>
-
+                                        <p className='text-base font-bold truncate max-w-full flex flex-wrap text-slate-50/80' >{item.username}</p>
+                                        <p className='text-xs text-slate-50/70 truncate max-w-full '>{item.fullName}</p>
                                     </div>
-
-
                                 </div>
                             </button>
                         ))
@@ -64,13 +61,12 @@ export default Sidebar
 
 function Header() {
     return (
-        <div className='flex flex-col gap-6  py-2 sticky top-0 bg-base-200'>
+        <div className='flex flex-col gap-6 py-2 lg:py-4 sticky top-0 bg-base-200'>
             <div className='flex items-center justify-between pl-4 pr-2 '>
-                <h1 className='text-bold text-2xl text-white/90' >Chat</h1>
+                <h1 className='font-bold text-2xl text-white/90 ' >Chat</h1>
                 <div className='flex items-center gap-4'>
-                    <button className="btn mt-2" onClick={() => document.getElementById('my_modal_2').showModal()}><MessageSquarePlus size={28} strokeWidth={1.5} /></button>
-                    <button><EllipsisVertical /></button>
-
+                    <button className="px-0 mt-2 cursor-pointer" onClick={() => document.getElementById('my_modal_2').showModal()}><MessageSquarePlus size={28} strokeWidth={1.5} /></button>
+                    <button className="mt-1 cursor-pointer"><EllipsisVertical /></button>
                 </div>
             </div>
 

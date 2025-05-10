@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 // import cloudinary from "../lib/cloudinary";
 
 export const signup = async (req, res) => {
-  const { username, fullName, password } = req.body;
+  const { username, name: fullName , password, agreeTerms } = req.body;
   try {
     if (!username || !fullName || !password) {
       return res.status(400).json({ message: "All fields are required!" });
@@ -50,7 +50,7 @@ export const login = async (req, res) => {
     const user = await User.findOne({ username });
 
     if (!user) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ message: "User Not Found in database" });
     }
 
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
