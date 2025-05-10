@@ -6,6 +6,7 @@ const roomSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isGroup: { type: Boolean, default: false },
     members: [
       {
         type: [mongoose.Schema.Types.ObjectId],

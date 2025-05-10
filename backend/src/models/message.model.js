@@ -7,27 +7,24 @@ const messageSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    receiverId: {
+    roomId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Room",
       required: true,
     },
-    message: {
+    content: {
       type: String,
       required: true,
     },
-    seen: { 
-      type: Boolean, 
-      default: false 
+    seen: {
+      type: Boolean,
+      default: false,
     },
     image: {
       type: String,
     },
-    timestamp: {
-      type: Date,
-      default: Date.now,
-    },
-  }, // Automatically add createdAt and updatedAt timestamps
+  },
+  { timestamps: true }
 );
 
 const Message = mongoose.model("Message", messageSchema);

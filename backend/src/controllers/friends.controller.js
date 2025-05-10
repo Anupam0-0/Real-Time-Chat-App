@@ -1,6 +1,5 @@
 import User from "../models/user.model.js";
 
-
 export const friendsList = async (req, res) => {
   const userId = req.user._id;
   if (!userId) {
