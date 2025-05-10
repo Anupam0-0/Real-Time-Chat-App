@@ -10,10 +10,10 @@ const baseURL = "http://localhost:5173/"
 
 
 export const connectSocket = (userId) => {
+  
   if (!socket) {
     socket = io(baseURL , {
       auth: { userId },
-      withCredentials: true,
     });
 
     socket.on("connected", (data) => {

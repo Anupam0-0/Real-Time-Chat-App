@@ -4,11 +4,16 @@ import SearchUserModal from './SearchUserModal'
 import { MessageSquarePlus, EllipsisVertical } from 'lucide-react'
 import { FriendList } from '../../lib/axios'
 import { set } from 'lodash'
+import { useNavigate } from 'react-router'
+import useChatStore from '../../store/useChatStore'
 
 
-const Sidebar = ({ screen, setScreen }) => {
+const Sidebar = () => {
     const [friends, setFriends] = useState([])
     const [loading, setLoading] = useState(true)
+    const navigate = useNavigate();
+
+    const {setScreen} = useChatStore();
 
     useEffect(() => {
         const fetchFriends = async () => {
@@ -28,6 +33,8 @@ const Sidebar = ({ screen, setScreen }) => {
 
     const handleScreen = (item) => {
         setScreen(item);
+        console.log(item);
+        navigate(`/chat/${item._id}`);
     }
 
     return (

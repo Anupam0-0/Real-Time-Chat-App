@@ -4,7 +4,8 @@ import Home from './pages/Homepage/Home'
 import Profile from './pages/Profile'
 import Settings from './pages/Settings'
 import AuthPage from './pages/Auth/AuthPage';
-import Chat from './pages/Chat/Home';
+import Chat from './pages/Chat/ChatLayout';
+import ChatScreen from './pages/Chat/ChatScreen';
 import { Toaster } from 'react-hot-toast';
 import useAuthStore from './store/useAuthStore';
 import Default from "./pages/Default/Default";
@@ -17,7 +18,9 @@ const App = () => {
         <Route path="/" element={<Home/>} />
         <Route path="/login" element={<AuthPage/>} />
         <Route path="/signup" element={<AuthPage />} />
-        <Route path="/chat" element={<Chat />} />
+        <Route path="/chat" element={<Chat />}>
+          <Route path=":id" element={<ChatScreen />} />
+        </Route>
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/*" element={<Default />} />
