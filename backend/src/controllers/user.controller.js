@@ -5,8 +5,8 @@ import User from "../models/user.model.js";
 
 
 // SEARCH FOR USER FOR DM by username
-// API endpoint: /api/user/search?id=
-export const getUserById = async (req, res) => {
+// API endpoint: /api/users/search?id=
+export const getUserByUsername = async (req, res) => {
   const { query } = req.query;
   if (!query) {
     return res.status(400).json({ message: "User ID is required" });
@@ -33,7 +33,7 @@ export const getUserById = async (req, res) => {
 };
 
 // GET USER PROFILE
-// API endpoint: /api/user/:id
+// API endpoint: /api/users/:id
 // fetch user date (used in sidebar/profile)
 export const getUserProfile = async (req, res) => {
   const { id } = req.params;

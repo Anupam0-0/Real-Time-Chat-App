@@ -8,7 +8,7 @@ const router = express.Router();
 // router.get("/:id", protectRoutes, getMessages);
 // router.post("/send/:id", protectRoutes, sendMessage);
 
-router.get("/users/:roomId", protectRoutes, getMessageByRoom);
-router.post("/users/:roomId", protectRoutes, sendMessageFallback);
+router.get("/:roomId", protectRoutes, getMessageByRoom);
+router.post("/:roomId", protectRoutes, sendMessageFallback);
 
 export default router;

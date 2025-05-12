@@ -9,7 +9,7 @@ import {app, server} from "./lib/socket.js";
 
 import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
-import friendRoutes from "./routes/friend.route.js";
+import roomRoutes from "./routes/room.route.js";
 import messageRoutes from "./routes/message.route.js";
 
 dotenv.config();
@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 })
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/friends", friendRoutes);
+app.use("/api/room", roomRoutes);
 app.use("/api/messages", messageRoutes);
 
 

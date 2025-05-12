@@ -47,6 +47,7 @@ export const createFetchDMRoom = async (req, res) => {
       room = await Room.create({
         isGroup: false,
         members: [req.user.userId, receiverId],
+        roomName: "",
       });
     }
 
@@ -103,7 +104,7 @@ export const createGroupRoom = async (req, res) => {
 
 // PUT /api/rooms/group/:id/rename
 // Update group name
-exports.renameGroup = async (req, res) => {
+export const renameGroup = async (req, res) => {
   const { name } = req.body;
 
   if (!name) {
@@ -135,7 +136,7 @@ exports.renameGroup = async (req, res) => {
 
 // PUT /api/rooms/group/:id/members
 // Add/remove users in group
-exports.updateGroupMembers = async (req, res) => {
+export const updateGroupMembers = async (req, res) => {
   const { members } = req.body;
 
   if (!members || members.length < 1) {

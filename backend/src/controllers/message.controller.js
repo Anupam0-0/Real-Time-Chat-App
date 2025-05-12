@@ -98,7 +98,7 @@ export const getMessageByRoom = async (req, res) => {
 // Optional: Fallback for sending messages when socket is not available || REST-based message sending
 export const sendMessageFallback = async (req, res) => {
   try {
-    const { content, image } = req.body;
+    // const { content, image } = req.body;
     const { id: roomId } = req.params;
     const senderId = req.user._id;
 
