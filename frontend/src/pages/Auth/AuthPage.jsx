@@ -7,13 +7,13 @@ import { useNavigate } from 'react-router-dom';
 
 const AuthPage = () => {
   const navigate = useNavigate();
-  const user = useAuthStore((state) => state.user);
+  const user = localStorage.getItem('monochatUser');
 
   useEffect(() => {
     if (user) {
       navigate('/chat');
     }
-  }, [user, navigate]);
+  }, [user]);
 
   return (
     <div className="h-screen overflow-y-auto bg-[#F5FAF6] w-full relative md:overflow-hidden">

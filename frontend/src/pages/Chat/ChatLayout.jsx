@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import useThemeStore from "../../store/useThemeStore";
 import ChatNavbar from "./ChatNavbar";
 import Sidebar from "./Sidebar";
-import useAuthStore from "../../store/useAuthStore";
 import { Outlet, useNavigate } from "react-router-dom";
+
+import useAuthStore from "@/store/useAuthStore";
+import useSocketStore from "@/store/useSocketStore";
 
 //just a head up : screen is the friend object
 //     it contains the fullName, profilePic, username, and _id of the friend
@@ -11,7 +13,14 @@ import { Outlet, useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
   const { theme } = useThemeStore();
-  const user = useAuthStore((state) => state.user); // Get the user from the store
+  const { user } = useAuthStore.getState();
+  const { connectSocket } = useSocketStore.getState();
+  connectSocket(token);
+
+  console.log("user", user);
+  // console.log to see socket connection with the server
+  
+
 
   useEffect(() => {
     if (!user) navigate("/login");

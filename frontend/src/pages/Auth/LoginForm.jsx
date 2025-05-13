@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FormInput from './ui/FormInput';
 import Button from './ui/Button';
 import SocialButtons from './ui/SocialButtons';
@@ -12,6 +12,7 @@ const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
 
   const validateForm = () => {
     const newErrors = {};
@@ -38,9 +39,10 @@ const LoginForm = () => {
           password,
         });
         
-        const {userId, message} = responseData;
+        const {user, message} = responseData;
+        console.log('Login response:', responseData);
         // console.log('Login response:', responseData);
-        if (userId && message) {
+        if (user && message) {
           toast.success('Login successful!');
           navigate('/chat');
         }else {

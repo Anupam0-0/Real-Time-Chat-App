@@ -70,10 +70,9 @@ const SignupForm = () => {
         });
 
         const data = await responseData;
-
-
+        // console.log("Signup response:", data);
         if (data) {
-          toast.success("Account created successfully!", data);
+          toast.success("Account created successfully! Proceed to Login!" );
           navigate("/chat");
         } else {
           toast.error("Signup Failed!");

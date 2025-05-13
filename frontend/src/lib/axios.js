@@ -1,12 +1,14 @@
 import axios from "axios";
 import useAuthStore from "../store/useAuthStore";
+import { use } from "react";
 
 const axiosInstance = axios.create({
-  baseURL:
-    import.meta.env.MODE === "development"
-      ? "http://localhost:3000/api"
-      : "/api",
-  withCredentials: true, // key to send cookies
+  baseURL: "http://localhost:3000/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
+    
+
 });
 
 export const handleSignup = async (userData) => {
@@ -14,10 +16,9 @@ export const handleSignup = async (userData) => {
     const res = await axiosInstance.post("/auth/signup", userData);
     if (res.status === 200) {
       const userId = res.data.userId; // Assuming the response contains the userId
-      useAuthStore.getState().setUser(userId); // Set the user ID in the store
-      localStorage.setItem("monochatID", userId);
-      console.log(res.data);
-      return res.data; // Return the response data
+      if (userId) {
+        return res.data; // Return the response data
+      }
     }
   } catch (error) {
     console.error("Error in handleSignup:", error.message);
@@ -29,10 +30,9 @@ export const handleLogin = async (userData) => {
   try {
     const res = await axiosInstance.post("/auth/login", userData);
     if (res.status === 200) {
-      const userId = res.data.userId; // Assuming the response contains the userId
-      useAuthStore.getState().setUser(userId); // Set the user ID in the store
-      localStorage.setItem("monochatID", userId);
-    //   console.log(res.data);
+      useAuthStore.getState().setUser(res.data.user); // Set the user data in the store
+      localStorage.setItem("monochatUser", JSON.stringify(res.data.user));
+      localStorage.setItem("monotoken", res.data.token); // Store the token in local storage
       return res.data; // Return the response data
     }
   } catch (error) {
