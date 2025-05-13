@@ -13,11 +13,17 @@ const useAuthStore = create((set) => ({
     },
 }))
 
-
 export const useRoomStore = create((set) => ({
     room: null,
     setRoom: (room) => {
         set({ room });
+    },
+}))
+
+export const useChatStore = create((set) => ({
+    chat: null,
+    setChat: (message) => {
+        set({ message });
     },
 }))
 
