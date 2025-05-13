@@ -3,6 +3,7 @@ import { createServer } from "http";
 import express from "express";
 import Message from "../models/message.model.js"
 import Room from "../models/room.model.js";
+import jwt from "jsonwebtoken";
 
 const app = express();
 const server = createServer(app);
@@ -19,6 +20,7 @@ const io = new Server(server, {
 
 io.use((socket, next) => {
   const token = socket.handshake.auth?.token;
+  // console.log("Socket token:", token); 
   if (!token) return next(new Error("User Token not provided"));
 
   try {
@@ -27,7 +29,7 @@ io.use((socket, next) => {
 
     const userId = decoded.userId;
     socket.userId = userId;
-    console.log("User authenticated", userId);
+    // console.log("User authenticated", userId);
 
     userSocketMap[userId] = socket.id; // Store the socket ID for the user
     reverseSocketMap[socket.id] = userId; // Store the user ID for the socket
@@ -52,8 +54,8 @@ export function getReceiverSocketId(userId) {
 
 
 io.on("connection", (socket) => {
-  const userId = socket.handshake.auth?.userId;
-  console.log("New socket connection", socket.id, "for user:", userId);
+  const userId = socket.userId;
+  console.log(">> New socket connection", socket.id, "for user:", userId);
 
   // returns to client that socket is connected
   socket.emit("connected", { socketId: socket.id });
@@ -62,12 +64,12 @@ io.on("connection", (socket) => {
   socket.on("check", (userId) => console.log("Checking connection for user:", userId));
 
 
-  Room.find({ members: userId }).then((rooms) => {
-    rooms.forEach((room) => {
-      socket.join(room._id.toString());
-      console.log(`>> User ${userId} joined room: ${room._id}`);
-    });
-  })
+  // Room.find({ members: userId }).then((rooms) => {
+  //   rooms.forEach((room) => {
+  //     socket.join(room._id.toString());
+  //     console.log(`>> User ${userId} joined room: ${room._id}`);
+  //   });
+  // })
 
   // User joins a room
   socket.on("join-room", (roomId) => {

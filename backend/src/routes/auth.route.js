@@ -16,6 +16,10 @@ router.post("/check", (req, res) => {
 })
 router.post("/signup", signup);
 router.post("/login", login);
+router.get("/login", (req, res) => {
+  console.log(req.body);
+  res.json({ message: "Hello from auth route. PS: Try Post for login" });
+});
 router.post("/logout", logout);
 
 router.put("/update-profile", protectRoutes, updateProfile);

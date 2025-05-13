@@ -6,7 +6,7 @@
 // PUT /api/rooms/group/:id/members
 // GET api/rooms/all
 
-const Room = require("../models/room.model.js");
+import Room from "../models/room.model.js";
 
 // GET /api/rooms
 // Get all DM + group rooms user is a part of

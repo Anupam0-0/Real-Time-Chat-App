@@ -15,24 +15,20 @@ import messageRoutes from "./routes/message.route.js";
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
-// const __dirname = path.resolve();
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(
-  cors({
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  })
+  cors({ origin: '*' })
 );
 
 app.get("/", (req, res) => {
   console.log("Hello");
   return res.json({message: "Hello There"})
 })
-app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/room", roomRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
 

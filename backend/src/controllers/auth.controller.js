@@ -31,7 +31,7 @@ export const signup = async (req, res) => {
 
     if (newUser) {
       // generate jwt token here
-      generateToken(newUser._id, res);
+      generateToken(newUser._id, newUser.username, newUser.fullName ,res);
       await newUser.save();
 
       res.status(200).json({
@@ -49,9 +49,11 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
   const { username, password } = req.body;
+  console.log(username, password);
+
   try {
     const user = await User.findOne({ username });
-
+    
     if (!user) {
       return res.status(400).json({ message: "User Not Found in database" });
     }
@@ -61,11 +63,17 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const token = generateToken(user._id, res);
+    const token = generateToken(user._id, user.username, user.fullName);
 
     res.status(200).json({
       token: token,
-      user: user,
+      user: {
+        _id: user._id,
+        username: user.username,
+        fullName: user.fullName,
+        profilePic: user.profilePic,
+        // add other non-circular fields as needed
+      },
       message: "Login successful",
     });
   } catch (error) {
