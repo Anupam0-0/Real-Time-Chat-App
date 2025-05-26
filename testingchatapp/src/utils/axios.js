@@ -10,8 +10,10 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    // Do something before request is sent
-    console.log("Request sent:", config);
+    const token = localStorage.getItem("TEMPTOKEN");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {

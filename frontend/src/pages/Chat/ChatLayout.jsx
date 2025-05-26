@@ -4,8 +4,8 @@ import ChatNavbar from "./ChatNavbar";
 import Sidebar from "./Sidebar";
 import { Outlet, useNavigate } from "react-router-dom";
 
-import useAuthStore from "@/store/useAuthStore";
-import useSocketStore from "@/store/useSocketStore";
+import useAuthStore from "../../store/useAuthStore";
+import useSocketStore from "../../store/useSocketStore";
 
 //just a head up : screen is the friend object
 //     it contains the fullName, profilePic, username, and _id of the friend

@@ -4,6 +4,7 @@ const roomSchema = new mongoose.Schema(
   {
     roomName: {
       type: String,
+      default: "DM",
       required: true,
     },
     isGroup: { type: Boolean, default: false },
