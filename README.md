@@ -6,6 +6,7 @@ A scalable full-stack real-time chat app using React.js, Express.js, Mongoose, S
 
 ### Documentation:
 https://app.eraser.io/workspace/3xp0ZuwL8foyDJZ53taR?origin=share
+https://www.notion.so/Mono-Chat-App-Documentation-2031853262b2808ba345c7e48c3f02a0?source=copy_link
 
 
 
